@@ -14,6 +14,7 @@ import {
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { BadRequestSwagger } from '../helpers/swagger/bad-request.swagger';
+import { NotFoundRequestSwagger } from '../helpers/swagger/not-found-request.swagger';
 import { CreateTodoDTO } from './dto/create-todo.dto';
 import { UpdateTodoDTO } from './dto/update-todo.dto';
 import { CreateTodoSwagger } from './swagger/create-todo.swagger';
@@ -41,7 +42,8 @@ export class TodoController {
     @Post()
     @ApiOperation({ summary: 'Add a new task' })
     @ApiResponse({ status: HttpStatus.CREATED, description: 'New task created success', type: CreateTodoSwagger })
-    @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Invalid params' })
+    @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Invalid params', type: BadRequestSwagger })
+    @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Task not found', type: NotFoundRequestSwagger })
     async create(@Body() body: CreateTodoDTO) {
         return await this.todoService.create(body);
     }
@@ -50,7 +52,8 @@ export class TodoController {
     @Get(':id')
     @ApiOperation({ summary: 'View one task data' })
     @ApiResponse({ status: HttpStatus.CREATED, description: 'Data task return success', type: ShowTodoSwagger })
-    @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Invalid params' })
+    @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Invalid params', type: BadRequestSwagger })
+    @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Task not found', type: NotFoundRequestSwagger })
     async show(@Param('id', new ParseUUIDPipe()) id: string) {
         return await this.todoService.findOne(id).catch((e) => {
             throw new NotFoundException(e.message);
@@ -61,7 +64,8 @@ export class TodoController {
     @Put(':id')
     @ApiOperation({ summary: 'Update one task data' })
     @ApiResponse({ status: HttpStatus.CREATED, description: 'Data task updated success', type: UpdateTodoSwagger })
-    @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Invalid params' })
+    @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Invalid params', type: BadRequestSwagger })
+    @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Task not found', type: NotFoundRequestSwagger })
     async update(@Param('id', new ParseUUIDPipe()) id: string, @Body() body: UpdateTodoDTO) {
         return await this.todoService.update(id, body).catch((e) => {
             throw new NotFoundException(e.message);
@@ -71,7 +75,8 @@ export class TodoController {
     @Delete(':id')
     @ApiOperation({ summary: 'Delete one task' })
     @ApiResponse({ status: HttpStatus.CREATED, description: 'Task deleted success' })
-    @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Invalid params' })
+    @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Invalid params', type: BadRequestSwagger })
+    @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Task not found', type: NotFoundRequestSwagger })
     @HttpCode(HttpStatus.NO_CONTENT)
     async delete(@Param('id', new ParseUUIDPipe()) id: string) {
         await this.todoService.delete(id).catch((e) => {
