@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity({ name: 'todos' })
 export class TodoEntity {
@@ -11,12 +11,12 @@ export class TodoEntity {
     @Column({ name: 'is_done', type: 'int', width: 1 })
     isDone: number;
 
-    @Column({ name: 'created_at' })
+    @CreateDateColumn({ name: 'created_at' })
     createdAt: string;
 
-    @Column({ name: 'updated_at' })
+    @UpdateDateColumn({ name: 'updated_at' })
     updatedAt: string;
 
-    @Column({ name: 'deleted_at' })
+    @DeleteDateColumn({ name: 'deleted_at' })
     deletedAt: string;
 }
