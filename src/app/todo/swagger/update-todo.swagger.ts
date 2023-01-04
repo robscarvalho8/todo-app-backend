@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class ShowTodoSwagger {
+export class UpdateTodoSwagger {
     @ApiProperty()
     id: string;
 
@@ -9,9 +9,4 @@ export class ShowTodoSwagger {
 
     @ApiProperty()
     isDone: number;
-}
-
-export class IndexTodoSwagger {
-    @ApiProperty()
-    items: ShowTodoSwagger[];
 }
