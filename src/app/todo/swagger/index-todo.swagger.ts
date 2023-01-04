@@ -12,6 +12,6 @@ export class ShowTodoSwagger {
 }
 
 export class IndexTodoSwagger {
-    @ApiProperty()
+    @ApiProperty({ type: ShowTodoSwagger, isArray: true })
     items: ShowTodoSwagger[];
 }

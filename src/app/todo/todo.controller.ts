@@ -33,7 +33,6 @@ export class TodoController {
         status: HttpStatus.OK,
         description: 'List of tasks returned success',
         type: IndexTodoSwagger,
-        isArray: true,
     })
     async index() {
         return await this.todoService.findAll();
