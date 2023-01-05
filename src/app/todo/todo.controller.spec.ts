@@ -1,3 +1,4 @@
+import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { CreateTodoDTO } from './dto/create-todo.dto';
 import { UpdateTodoDTO } from './dto/update-todo.dto';
@@ -103,7 +104,7 @@ describe('TodoController', () => {
 
         it('should throw an exception', () => {
             // Arrange
-            jest.spyOn(todoService, 'findOne').mockRejectedValueOnce(new Error());
+            jest.spyOn(todoService, 'findOne').mockRejectedValueOnce(new NotFoundException());
             // Act
             // Assert
             expect(todoController.show('1')).rejects.toThrowError();
@@ -131,7 +132,7 @@ describe('TodoController', () => {
                 task: 'update-task',
                 isDone: 1,
             };
-            jest.spyOn(todoService, 'update').mockRejectedValueOnce(new Error());
+            jest.spyOn(todoService, 'update').mockRejectedValueOnce(new NotFoundException());
             // Act
             // Assert
             expect(todoController.update('1', body)).rejects.toThrowError();
@@ -149,7 +150,7 @@ describe('TodoController', () => {
         });
         it('should throw an exception', () => {
             // Arrange
-            jest.spyOn(todoService, 'delete').mockRejectedValueOnce(new Error());
+            jest.spyOn(todoService, 'delete').mockRejectedValueOnce(new NotFoundException());
             // Act
             // Assert
             expect(todoController.delete('1')).rejects.toThrowError();
