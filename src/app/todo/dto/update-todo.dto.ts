@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsInt, IsNotEmpty, IsString, Max, Min } from 'class-validator';
+import { IsInt, IsNotEmpty, IsOptional, IsString, Max, Min } from 'class-validator';
 
 export class UpdateTodoDTO {
     @IsNotEmpty()
@@ -7,9 +7,10 @@ export class UpdateTodoDTO {
     @ApiProperty()
     task: string;
 
+    @IsOptional()
     @IsInt()
     @Min(0)
     @Max(1)
     @ApiPropertyOptional()
-    isDone?: number;
+    isDone: number;
 }
