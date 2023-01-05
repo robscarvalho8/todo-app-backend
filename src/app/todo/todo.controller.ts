@@ -1,5 +1,6 @@
 import {
     Body,
+    ClassSerializerInterceptor,
     Controller,
     Delete,
     Get,
@@ -10,7 +11,8 @@ import {
     ParseUUIDPipe,
     Post,
     Put,
-    Query,
+    SerializeOptions,
+    UseInterceptors,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { BadRequestSwagger } from '../helpers/swagger/bad-request.swagger';
@@ -24,6 +26,7 @@ import { TodoService } from './todo.service';
 
 @Controller('api/v1/todos')
 @ApiTags('todos')
+@UseInterceptors(ClassSerializerInterceptor)
 export class TodoController {
     constructor(private readonly todoService: TodoService) {}
 
@@ -35,7 +38,8 @@ export class TodoController {
         type: IndexTodoSwagger,
     })
     async index() {
-        return await this.todoService.findAll();
+        const tasks = await this.todoService.findAll();
+        return { items: tasks };
     }
 
     @Post()
@@ -54,9 +58,10 @@ export class TodoController {
     @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Invalid params', type: BadRequestSwagger })
     @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Task not found', type: NotFoundRequestSwagger })
     async show(@Param('id', new ParseUUIDPipe()) id: string) {
-        return await this.todoService.findOne(id).catch((e) => {
+        const task = await this.todoService.findOne(id).catch((e) => {
             throw new NotFoundException(e.message);
         });
+        return task;
     }
 
     // PUT http://localhost:3000/api/v1/todos/uuid
