@@ -27,7 +27,12 @@ export class TodoEntity {
     @Exclude()
     deletedAt: string;
 
-    toJSON() {
-        return classToPlain(this);
+    constructor(todo?: Partial<TodoEntity>) {
+        this.id = todo?.id;
+        this.task = todo?.task;
+        this.isDone = todo?.isDone;
+        this.createdAt = todo?.createdAt;
+        this.updatedAt = todo?.updatedAt;
+        this.deletedAt = todo?.deletedAt;
     }
 }
