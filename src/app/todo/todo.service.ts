@@ -17,7 +17,7 @@ export class TodoService {
     }
 
     async findOne(id: string) {
-        const todo = await this.todoRepository.findOne({ where: { id: id } }).catch();
+        const todo = await this.todoRepository.findOneOrFail({ where: { id: id } }).catch();
         if (!todo) {
             throw Error(`Task with id '${id}' not found`);
         }

@@ -11,5 +11,5 @@ export class UpdateTodoDTO {
     @Min(0)
     @Max(1)
     @ApiPropertyOptional()
-    isDone: number;
+    isDone?: number;
 }
