@@ -107,7 +107,7 @@ describe('TodoController', () => {
             jest.spyOn(todoService, 'findOne').mockRejectedValueOnce(new NotFoundException());
             // Act
             // Assert
-            expect(todoController.show('1')).rejects.toThrowError();
+            expect(todoController.show('1')).rejects.toThrowError(NotFoundException);
         });
     });
 
@@ -135,7 +135,7 @@ describe('TodoController', () => {
             jest.spyOn(todoService, 'update').mockRejectedValueOnce(new NotFoundException());
             // Act
             // Assert
-            expect(todoController.update('1', body)).rejects.toThrowError();
+            expect(todoController.update('1', body)).rejects.toThrowError(NotFoundException);
         });
     });
 
@@ -153,7 +153,7 @@ describe('TodoController', () => {
             jest.spyOn(todoService, 'delete').mockRejectedValueOnce(new NotFoundException());
             // Act
             // Assert
-            expect(todoController.delete('1')).rejects.toThrowError();
+            expect(todoController.delete('1')).rejects.toThrowError(NotFoundException);
         });
     });
 });
